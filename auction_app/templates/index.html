@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+    <title>Auction Login</title>
+</head>
+<body>
+    <h1>Welcome to Frank's Auction</h1>
+    <form method="POST">
+        <label>Enter your username:</label>
+        <input type="text" name="username" required>
+        <button type="submit">Enter Auction</button>
+    </form>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+</body>
+</html>

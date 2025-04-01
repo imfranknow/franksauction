@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+    <title>Auction</title>
+</head>
+<body>
+    <h1>Auction for: {{ auction_item }}</h1>
+    {% if auction_image %}
+      <img src="{{ auction_image }}" alt="{{ auction_item }}" style="max-width:400px;">
+    {% endif %}
+    <p>Current Highest Bid: {{ highest_bid }} truffles</p>
+    {% if highest_bidder %}
+      <p>Highest Bidder: {{ highest_bidder }}</p>
+    {% endif %}
+    
+    {% if auction_end_time %}
+        {% if auction_ended %}
+            <p>Auction has ended.</p>
+        {% else %}
+            <p>Auction ends in: {{ remaining_time }} (HH:MM:SS)</p>
+            <p>(30‑second sniper rule active: bids placed within the last 30 seconds extend the auction.)</p>
+        {% endif %}
+    {% else %}
+        <p>Auction not started yet. Place your first bid to start a 1‑hour auction.</p>
+    {% endif %}
+
+    {% if not auction_end_time or not auction_ended %}
+    <form method="POST">
+        <label>Your Bid (in truffles):</label>
+        <input type="number" name="bid" min="1" required>
+        <button type="submit">Place Bid</button>
+    </form>
+    {% endif %}
+
+    <h2>All Bids:</h2>
+    {% if bids %}
+      <ul>
+      {% for bid in bids %}
+          <li>
+              <strong>{{ bid.bidder }}</strong> bid <strong>{{ bid.bid }}</strong> truffles at {{ bid.time }}
+          </li>
+      {% endfor %}
+      </ul>
+    {% else %}
+      <p>No bids yet.</p>
+    {% endif %}
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+</body>
+</html>
