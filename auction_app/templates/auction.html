@@ -16,6 +16,11 @@
     {% if auction_end_time %}
         {% if auction_ended %}
             <p>Auction has ended.</p>
+            {% if highest_bidder %}
+              <p><strong>WINNER: {{ highest_bidder }}</strong></p>
+            {% else %}
+              <p>No bids were placed.</p>
+            {% endif %}
         {% else %}
             <p>Auction ends in: {{ remaining_time }} (HH:MM:SS)</p>
             <p>(30‑second sniper rule active: bids placed within the last 30 seconds extend the auction.)</p>
